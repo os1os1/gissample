@@ -22,6 +22,44 @@
     });
 
     map.addControl(new maplibregl.NavigationControl());
+    
+    fetch('https://gisbackend-production.up.railway.app/api/places')
+    .then(response => response.json())
+    .then(data => {
+        const geojsonData = {
+            "type": "FeatureCollection",
+            "features": data.map(item => ({
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": item.location.coordinates
+                },
+                "properties": {
+                    "id": item.id,
+                    "title": item.title
+                }
+            }))
+        };
+
+        // GeoJSON をマップに追加
+        map.on('load', () => {
+            map.addSource('places', {
+                'type': 'geojson',
+                'data': geojsonData
+            });
+
+            map.addLayer({
+                'id': 'places-layer',
+                'type': 'symbol',
+                'source': 'places',
+                'layout': {
+                    'icon-image': 'marker-15',
+                    'icon-size': 2
+                }
+            });
+        });
+    });    
+    
   </script>
 </body>
 </html>
