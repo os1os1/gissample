@@ -91,6 +91,11 @@ map.on('click', (e) => {
 
     // サブウィンドウを表示
     document.getElementById('registerForm').style.display = 'block';
+    
+    // 再描画のタイミングを少し遅らせる
+    setTimeout(() => {
+      document.getElementById('registerForm').style.display = 'block';
+    }, 10);
 });
 
 document.getElementById('submitPlace').addEventListener('click', () => {
@@ -141,6 +146,8 @@ function reloadPlaces() {
     fetch('https://gisbackend-production.up.railway.app/api/places')
     .then(response => response.json())
     .then(data => {
+        console.log("取得したデータ:", data);
+    
         const geojsonData = {
             "type": "FeatureCollection",
             "features": data.map(item => ({
