@@ -142,10 +142,12 @@ document.getElementById('submitPlace').addEventListener('click', () => {
 });
 
 // 再読み込み関数（再利用可能）
+let markers = [];
+
+function reloadPlaces() {
   // 古いマーカーを全部消す
   markers.forEach(marker => marker.remove());
   markers = [];
-
   fetch('https://gisbackend-production.up.railway.app/api/places')
     .then(response => response.json())
     .then(data => {
