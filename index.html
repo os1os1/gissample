@@ -104,6 +104,17 @@ document.getElementById('submitPlace').addEventListener('click', () => {
         alert("タイトルと位置を指定してください");
         return;
     }
+    
+const requestBody = {
+    title: title,
+    location: {
+        type: "Point",
+        coordinates: [clickedCoordinates.lng, clickedCoordinates.lat]
+    }
+};
+
+console.log("Request Body:", JSON.stringify(requestBody));    
+    
 
     fetch('https://gisbackend-production.up.railway.app/api/places', {
         method: 'POST',
