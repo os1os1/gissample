@@ -150,6 +150,7 @@ console.log("Request Body:", JSON.stringify(requestBody));
         console.error("登録エラー:", err);
         alert("登録に失敗しました");
     });
+    isRegistering = false;
 });
 
 // 再読み込み関数（再利用可能）
