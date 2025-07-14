@@ -116,7 +116,7 @@ const requestBody = {
 console.log("Request Body:", JSON.stringify(requestBody));    
     
 
-    fetch('https://gisbackend-production.up.railway.app/api/places', {
+    fetch('https://itchy-marlie-os1os1-88de261b.koyeb.app/api/places', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -160,7 +160,7 @@ function reloadPlaces() {
   // 古いマーカーを全部消す
   markers.forEach(marker => marker.remove());
   markers = [];
-  fetch('https://gisbackend-production.up.railway.app/api/places')
+  fetch('https://itchy-marlie-os1os1-88de261b.koyeb.app/api/places')
     .then(response => response.json())
     .then(data => {
       console.log("取得したデータ:", data);
@@ -175,6 +175,31 @@ function reloadPlaces() {
     });
 }
 reloadPlaces();
+
+ // 位置情報を取得して地図を移動
+    function moveToCurrentLocation() {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lng = position.coords.longitude;
+            const lat = position.coords.latitude;
+
+            // 地図を現在地に移動（アニメーション付き）
+            map.flyTo({
+              center: [lng, lat],
+              zoom: 15
+            });
+
+          },
+          (error) => {
+            console.error("位置情報の取得に失敗しました:", error);
+          }
+        );
+      } else {
+        alert("このブラウザは位置情報に対応していません。");
+      }
+    }
+
   </script>
 </body>
 </html>
